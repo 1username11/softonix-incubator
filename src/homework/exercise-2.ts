@@ -4,19 +4,24 @@
   щоб виправити всі помилки TS.
 */
 
-interface IUser {
+// interface IUser {
+//   name: string
+//   age: number
+//   occupation: string
+// }
+
+// interface IAdmin {
+//   name: string
+//   age: number
+//   role: string
+// }
+
+type TPerson = {
   name: string
   age: number
   occupation?: string
-}
-
-interface IAdmin {
-  name: string
-  age: number
   role?: string
 }
-
-type TPerson = IUser & IAdmin
 
 const persons: Array<TPerson> /* <- замінити на IPerson[] */ = [
   {
