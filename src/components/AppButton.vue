@@ -18,7 +18,3 @@ defineProps<{
   disabled?: boolean
 }>()
 </script>
-
-<style scoped>
-
-</style>

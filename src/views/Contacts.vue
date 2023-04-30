@@ -95,14 +95,6 @@ function editContact (contactId: number) {
   router.push({ name: 'upsertContact', params: { contactId } })
 }
 
-function ascendingSort (a: IContact, b: IContact) {
-  return a.name > b.name ? 1 : 0
-}
-
-function descendingSort (a: IContact, b: IContact) {
-  return a.name > b.name ? -1 : 0
-}
-
 const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
   .filter((item) => {
     if (item.role !== 'all') {
@@ -114,9 +106,9 @@ const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
   .sort(
     (a: IContact, b: IContact): any => {
       if (sortingType.value === 'ascending') {
-        return ascendingSort(a, b)
+        return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
       } else if (sortingType.value === 'descending') {
-        return descendingSort(a, b)
+        return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
       }
     }
   ))

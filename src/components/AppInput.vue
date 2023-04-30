@@ -19,7 +19,3 @@ withDefaults(defineProps<{
 
 defineEmits(['update:modelValue'])
 </script>
-
-<style scoped>
-
-</style>

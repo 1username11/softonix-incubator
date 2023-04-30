@@ -93,7 +93,3 @@ function onDelete () {
   router.replace({ name: 'contacts' })
 }
 </script>
-
-<style scoped>
-
-</style>
