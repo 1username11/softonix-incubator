@@ -21,16 +21,28 @@
       <div class="flex mt-[51px]">
         <div class="flex">
           <div>
-            <div class="mb-[26px] mr-[30px]"><img src="@/static/Card%2001.png" alt=""></div>
-            <div><img src="@/static/Card%2004.png" alt=""></div>
+            <div class="mb-[26px] mr-[30px]">
+              <img src="@/static/Card%2001.png" alt="">
+            </div>
+            <div>
+              <img src="@/static/Card%2004.png" alt="">
+            </div>
           </div>
-          <div class="mr-[30px]"><img src="@/static/Card%2002.png" alt=""></div>
+          <div class="mr-[30px]">
+            <img src="@/static/Card%2002.png" alt="">
+          </div>
         </div>
         <div>
-          <div><img src="@/static/Card%2003.png" alt=""></div>
+          <div>
+            <img src="@/static/Card%2003.png" alt="">
+          </div>
           <div class="flex">
-            <div class="mt-[13px] mr-[30px]"><img src="@/static/Card%2005.png" alt=""></div>
-            <div class="mt-[13px]"><img src="@/static/Card%2006.png" alt=""></div>
+            <div class="mt-[13px] mr-[30px]">
+              <img src="@/static/Card%2005.png" alt="">
+            </div>
+            <div class="mt-[13px]">
+              <img src="@/static/Card%2006.png" alt="">
+            </div>
           </div>
         </div>
       </div>

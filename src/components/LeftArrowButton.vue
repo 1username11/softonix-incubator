@@ -1,7 +1,7 @@
 <template>
   <button
     :class="{ 'bg-black': isClicked, 'bg-[#faf8ed]': !isClicked }"
-    class="w-14 h-14 rounded-full border border-black flex justify-center items-center"
+    class="w-14 h-14 rounded-full border border-black flex justify-center items-center "
     @mousedown="isClicked = true" @mouseup="isClicked = false"
   >
     <template v-if="!isClicked">

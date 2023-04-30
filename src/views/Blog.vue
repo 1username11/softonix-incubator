@@ -11,7 +11,8 @@
       >
         <p class="text-gray-400 text-[18px] font-inter">
           Salty helped me a lot in finding the best place for our first outdoor adventure trip.
-          They responded very quickly and gave me a detailed account of the place—its history, as well as its best features.
+          They responded very quickly and gave me a detailed account of the place—its history,
+          as well as its best features.
         </p>
         <div class="mt-[27px]">
           <svg width="108" height="17" viewBox="0 0 108 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,15 +29,9 @@
             <p class="font-inter text-[12px] text-gray-400">Enterpreneur</p>
           </div>
 
-          <div class="flex space-x-4">
-            <svg width="40" height="40" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="27" cy="27" r="26.5" transform="matrix(-1 0 0 1 54 0)" stroke="#2D3134" />
-              <path d="M30 33L24 27L30 21" stroke="#2D3134" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <svg width="40" height="40" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="27" cy="27" r="27" fill="#2D3134" />
-              <path d="M24 33L30 27L24 21" stroke="#FAF8ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+          <div class="flex space-x-4 bg-white">
+            <LeftArrowButton class="bg-white w-10 h-10" />
+            <RightArrowButton class="bg-white w-10 h-10" />
           </div>
         </div>
       </div>
@@ -54,7 +49,7 @@
       w-[450px] h-[60px] pb-[10px] pt-[10px] pr-3 pl-3 mt-10"
     >
       <input class="w-full h-full mr-2">
-      <div class="flex items-center justify-center bg-amber-500 rounded-lg w-10 h-10">
+      <button class="flex items-center justify-center bg-[#F66F4D] rounded-xl w-10 h-10">
         <svg class="max-w-full" viewBox="0 0 42 35" fill="none">
           <g filter="url(#filter0_d_2_37)">
             <path d="M13.082 17.8821L17.0859 19.8812L26.3675 11.5213L19.0878 20.9716V25.3333L21.8177 21.8803L26.3675 23.6977L28.9154 8.25L13.082 17.8821Z" fill="white" />
@@ -71,7 +66,11 @@
             </filter>
           </defs>
         </svg>
-      </div>
+      </button>
     </div>
   </section>
 </template>
+<script setup lang="ts">
+import LeftArrowButton from '@/components/LeftArrowButton.vue'
+import RightArrowButton from '@/components/RightArrowButton.vue'
+</script>
