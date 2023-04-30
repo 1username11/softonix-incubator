@@ -2,13 +2,16 @@
   <div>
     <div class="flex items-center gap-4">
       <h3 class="font-medium m-0">Contact list</h3>
+
       <AppButton @click="createNewContact">
         <template #icon>
           <IconPlus class="w-5 h-5" />
         </template>
         Create Contact
       </AppButton>
+
       <AppInput v-model="searchParam" placeholder="Search..." class="max-w-[400px]" />
+
       <div class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min">
         <select v-model="role" class="bg-white">
           <option
@@ -21,6 +24,7 @@
           </option>
         </select>
       </div>
+
       <div class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min">
         <select v-model="sortingType" class="bg-white">
           <option
@@ -38,7 +42,7 @@
 
     <div class="contact-list grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
       <ContactItem
-        v-for="contact in filteredArr"
+        v-for="contact in contacts"
         :key="contact.id"
         class="cursor-pointer"
         :contact="contact"
@@ -51,20 +55,18 @@
 </template>
 
 <script lang="ts" setup>
-
-import ContactItem from '@/components/ContactItem.vue'
-import AppButton from '@/components/AppButton.vue'
-import IconPlus from '@/components/icons/IconPlus.vue'
 import { useRouter } from 'vue-router'
 import { useContactsStore } from '@/store'
 import { storeToRefs } from 'pinia'
+import { ref, watch } from 'vue'
+import ContactItem from '@/components/ContactItem.vue'
+import AppButton from '@/components/AppButton.vue'
+import IconPlus from '@/components/icons/IconPlus.vue'
 import AppInput from '@/components/AppInput.vue'
-import { computed, ref } from 'vue'
-import type { IContact } from '@/types'
 
 const contactsStore = useContactsStore()
 const { contacts, searchParam, roles } = storeToRefs(contactsStore)
-const { deleteContact, updateContact, filterArr } = contactsStore
+const { deleteContact, updateContact, searchContacts } = contactsStore
 const router = useRouter()
 
 const sortingType = ref('default')
@@ -95,22 +97,28 @@ function editContact (contactId: number) {
   router.push({ name: 'upsertContact', params: { contactId } })
 }
 
-const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
-  .filter((item) => {
-    if (item.role !== 'all') {
-      return item.role.includes(role.value)
-    } else {
-      return item.role.includes('')
-    }
-  })
-  .sort(
-    (a: IContact, b: IContact): any => {
-      if (sortingType.value === 'ascending') {
-        return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-      } else if (sortingType.value === 'descending') {
-        return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
-      }
-    }
-  ))
+watch(searchParam, (query) => {
+  console.log('searchParam', searchParam.value)
+  console.log('query', query)
+  searchContacts(query)
+})
+
+// const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
+//   .filter((item) => {
+//     if (item.role !== 'all') {
+//       return item.role.includes(role.value)
+//     } else {
+//       return item.role.includes('')
+//     }
+//   })
+//   .sort(
+//     (a: IContact, b: IContact): any => {
+//       if (sortingType.value === 'ascending') {
+//         return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+//       } else if (sortingType.value === 'descending') {
+//         return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
+//       }
+//     }
+//   ))
 
 </script>

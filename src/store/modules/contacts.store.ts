@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import type { IContact } from '@/types'
 
 export const useContactsStore = defineStore('contactsStore', () => {
-  const contacts = ref<IContact[]>([
+  const contactsBase: IContact[] = [
     {
       id: 1,
       name: 'Esther Howard',
@@ -25,8 +25,8 @@ export const useContactsStore = defineStore('contactsStore', () => {
       image: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
       role: 'user'
     }
-  ])
-
+  ]
+  const contacts = ref<IContact[]>([...contactsBase])
   const roles = ref([
     {
       label: 'All',
@@ -54,8 +54,8 @@ export const useContactsStore = defineStore('contactsStore', () => {
     contacts.value[currentIndex] = { ...contact }
   }
 
-  function filterArr (contacts: IContact[], searchParam: string) {
-    return contacts.filter((item) => {
+  function searchContacts (searchParam: string) {
+    contacts.value = contactsBase.filter((item) => {
       return item.description.toUpperCase().includes(searchParam.toUpperCase()) ||
           item.name.toUpperCase().includes(searchParam.toUpperCase())
     })
@@ -69,7 +69,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
     contacts,
     deleteContact,
     addContact,
-    filterArr,
+    searchContacts,
     searchParam,
     updateContact,
     roles,
