@@ -27,21 +27,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
     }
   ]
   const contacts = ref<IContact[]>([...contactsBase])
-  const roles = ref([
-    {
-      label: 'All',
-      value: '',
-      selected: true
-    }, {
-      label: 'Admin',
-      value: 'admin',
-      selected: false
-    }, {
-      label: 'User',
-      value: 'user',
-      selected: false
-    }
-  ])
+  const roles = ref(['user', 'admin'])
   const rolesForUpsertContact = ref(roles.value.slice(1))
   const searchParam = ref('')
 
@@ -61,6 +47,14 @@ export const useContactsStore = defineStore('contactsStore', () => {
     })
   }
 
+  function roleFilter (roles: string []) {
+    if (roles.length) {
+      contacts.value = contactsBase.filter((item) => {
+        return roles.includes(item.role)
+      })
+    } else { }
+  }
+
   function addContact (contact: IContact) {
     contacts.value.push(contact)
   }
@@ -73,6 +67,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
     searchParam,
     updateContact,
     roles,
-    rolesForUpsertContact
+    rolesForUpsertContact,
+    roleFilter
   }
 })

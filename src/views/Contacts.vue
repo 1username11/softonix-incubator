@@ -18,12 +18,19 @@
             v-for="(roleItem, idx) in roles"
             :key="idx"
             class="text-gray font-semibold"
-            :value="roleItem.value"
+            :value="roleItem"
           >
-            {{ roleItem.label }}
+            {{ roleItem }}
           </option>
         </select>
       </div>
+
+      <MultiSelect
+        v-model="selectedRoles"
+        class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min"
+        :options="roles"
+        @update:modelValue="roleFilter"
+      />
 
       <div class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min">
         <select v-model="sortingType" class="bg-white">
@@ -63,14 +70,15 @@ import ContactItem from '@/components/ContactItem.vue'
 import AppButton from '@/components/AppButton.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import AppInput from '@/components/AppInput.vue'
+import MultiSelect from '@/components/MultiSelect.vue'
 
 const contactsStore = useContactsStore()
 const { contacts, searchParam, roles } = storeToRefs(contactsStore)
-const { deleteContact, updateContact, searchContacts } = contactsStore
+const { deleteContact, updateContact, searchContacts, roleFilter } = contactsStore
 const router = useRouter()
 
 const sortingType = ref('default')
-const role = ref('')
+const selectedRoles = ref([''])
 
 const sortingTypeArr = [
   {
@@ -98,8 +106,6 @@ function editContact (contactId: number) {
 }
 
 watch(searchParam, (query) => {
-  console.log('searchParam', searchParam.value)
-  console.log('query', query)
   searchContacts(query)
 })
 

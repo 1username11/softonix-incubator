@@ -13,10 +13,10 @@
           <option
             v-for="(roleItem, idx) in rolesForUpsertContact"
             :key="idx"
-            :value="roleItem.value"
+            :value="roleItem"
             selected
           >
-            {{ roleItem.label }}
+            {{ roleItem }}
           </option>
         </select>
       </div>
@@ -52,7 +52,7 @@ import type { IContact } from '@/types'
 import { storeToRefs } from 'pinia'
 
 const contactsStore = useContactsStore()
-const { contacts, rolesForUpsertContact, roles } = storeToRefs(contactsStore)
+const { contacts, rolesForUpsertContact } = storeToRefs(contactsStore)
 const { addContact, deleteContact, updateContact } = contactsStore
 
 const router = useRouter()
