@@ -27,7 +27,24 @@ export const useContactsStore = defineStore('contactsStore', () => {
     }
   ]
   const contacts = ref<IContact[]>([...contactsBase])
-  const roles = ref(['user', 'admin'])
+  const roles = ref(['all', 'user', 'admin'])
+  const sortingTypes = ref([
+    {
+      label: 'Default',
+      value: 'default',
+      selected: true
+    },
+    {
+      label: 'Ascending',
+      value: 'ascending',
+      selected: false
+    },
+    {
+      label: 'Descending',
+      value: 'descending',
+      selected: false
+    }
+  ])
   const rolesForUpsertContact = ref(roles.value.slice(1))
   const searchParam = ref('')
 
@@ -48,11 +65,23 @@ export const useContactsStore = defineStore('contactsStore', () => {
   }
 
   function roleFilter (roles: string []) {
-    if (roles.length) {
+    if (!roles.includes('all')) {
       contacts.value = contactsBase.filter((item) => {
         return roles.includes(item.role)
       })
-    } else { }
+    } else {
+      contacts.value = [...contactsBase]
+    }
+  }
+
+  function contactsSorting (sortingType: string) {
+    contacts.value = contactsBase.sort((a: IContact, b: IContact): any => {
+      if (sortingType === 'ascending') {
+        return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+      } else if (sortingType === 'descending') {
+        return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
+      }
+    })
   }
 
   function addContact (contact: IContact) {
@@ -60,6 +89,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
   }
 
   return {
+    sortingTypes,
     contacts,
     deleteContact,
     addContact,
@@ -68,6 +98,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
     updateContact,
     roles,
     rolesForUpsertContact,
-    roleFilter
+    roleFilter,
+    contactsSorting
   }
 })

@@ -1,23 +1,23 @@
 <template>
-  <div class="multiselect">
-    <div class="multiselect__selected" @click="toggleOpen">
-      <span v-if="selected.length > 0">{{ selected.join(', ') }}</span>
-      <span v-else>Select options...</span>
-      <i :class="['fas', isOpen ? 'fa-caret-up' : 'fa-caret-down']" />
+    <div class="multiselect">
+        <div class="multiselect__selected" @click="toggleOpen">
+            <span v-if="selected.length > 0">{{ selected.join(', ') }}</span>
+            <span v-else>Select options...</span>
+            <i :class="['fas', isOpen ? 'fa-caret-up' : 'fa-caret-down']" />
+        </div>
+        <div v-show="isOpen" class="multiselect__options">
+            <div
+                    v-for="option in options"
+                    :key="option"
+                    class="multiselect__option"
+                    :class="{ 'multiselect__option--selected': selected.includes(option) }"
+                    @click="handleSelect(option)"
+            >
+                {{ option }}
+                <i v-if="selected.includes(option)" class="fas fa-check" />
+            </div>
+        </div>
     </div>
-    <div v-show="isOpen" class="multiselect__options">
-      <div
-        v-for="option in options"
-        :key="option"
-        class="multiselect__option"
-        :class="{ 'multiselect__option--selected': selected.includes(option) }"
-        @click="handleSelect(option)"
-      >
-        {{ option }}
-        <i v-if="selected.includes(option)" class="fas fa-check" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">

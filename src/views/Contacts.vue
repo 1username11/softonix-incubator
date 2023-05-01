@@ -12,19 +12,6 @@
 
       <AppInput v-model="searchParam" placeholder="Search..." class="max-w-[400px]" />
 
-      <div class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min">
-        <select v-model="role" class="bg-white">
-          <option
-            v-for="(roleItem, idx) in roles"
-            :key="idx"
-            class="text-gray font-semibold"
-            :value="roleItem"
-          >
-            {{ roleItem }}
-          </option>
-        </select>
-      </div>
-
       <MultiSelect
         v-model="selectedRoles"
         class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min"
@@ -35,7 +22,7 @@
       <div class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min">
         <select v-model="sortingType" class="bg-white">
           <option
-            v-for="(sortingTypeItem, idx) in sortingTypeArr"
+            v-for="(sortingTypeItem, idx) in sortingTypes"
             :key="idx"
             class="text-gray font-semibold"
             :value="sortingTypeItem.value"
@@ -73,30 +60,13 @@ import AppInput from '@/components/AppInput.vue'
 import MultiSelect from '@/components/MultiSelect.vue'
 
 const contactsStore = useContactsStore()
-const { contacts, searchParam, roles } = storeToRefs(contactsStore)
-const { deleteContact, updateContact, searchContacts, roleFilter } = contactsStore
+const { contacts, searchParam, roles, sortingTypes } = storeToRefs(contactsStore)
+const { deleteContact, updateContact, searchContacts, roleFilter, contactsSorting } = contactsStore
 const router = useRouter()
 
 const sortingType = ref('default')
-const selectedRoles = ref([''])
+const selectedRoles = ref(['all'])
 
-const sortingTypeArr = [
-  {
-    label: 'Default',
-    value: 'default',
-    selected: true
-  },
-  {
-    label: 'Ascending',
-    value: 'ascending',
-    selected: false
-  },
-  {
-    label: 'Descending',
-    value: 'descending',
-    selected: false
-  }
-]
 function createNewContact () {
   router.push({ name: 'upsertContact', params: { contactId: 'new' } })
 }
@@ -108,7 +78,9 @@ function editContact (contactId: number) {
 watch(searchParam, (query) => {
   searchContacts(query)
 })
-
+watch(sortingType, (query) => {
+  contactsSorting(query)
+})
 // const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
 //   .filter((item) => {
 //     if (item.role !== 'all') {
