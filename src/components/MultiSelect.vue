@@ -1,23 +1,32 @@
 <template>
-    <div class="multiselect">
-        <div class="multiselect__selected" @click="toggleOpen">
-            <span v-if="selected.length > 0">{{ selected.join(', ') }}</span>
-            <span v-else>Select options...</span>
-            <i :class="['fas', isOpen ? 'fa-caret-up' : 'fa-caret-down']" />
-        </div>
-        <div v-show="isOpen" class="multiselect__options">
-            <div
-                    v-for="option in options"
-                    :key="option"
-                    class="multiselect__option"
-                    :class="{ 'multiselect__option--selected': selected.includes(option) }"
-                    @click="handleSelect(option)"
-            >
-                {{ option }}
-                <i v-if="selected.includes(option)" class="fas fa-check" />
-            </div>
-        </div>
+  <div
+    class="inline-block relative text-sm text-gray min-w-[100px]"
+  >
+    <div
+      class="flex items-center justify-between p-2 bg-white border
+      border-gray rounded-lg cursor-pointer hover:bg-gray-ultra-light capitalize"
+      @click="toggleOpen"
+    >
+      <span
+        class="flex-1"
+      >{{ selected.join(', ') }}</span>
     </div>
+    <div
+      v-show="isOpen"
+      class="absolute top-full left-0 z-50 w-full max-h-[200px]
+      overflow-y-auto bg-white border border-gray-light rounded-lg shadow"
+    >
+      <div
+        v-for="option in options"
+        :key="option"
+        class="flex items-center justify-between p-2.5 cursor-pointer hover:bg-[#f5f5f5] capitalize"
+        :class="{ 'bg-[#e5e5e5]': selected.includes(option) }"
+        @click="handleSelect(option)"
+      >
+        {{ option }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -38,11 +47,23 @@ const toggleOpen = () => {
 }
 
 const handleSelect = (option: string) => {
-  const index = selected.value.indexOf(option)
-  if (index === -1) {
-    selected.value.push(option)
+  if (option === 'all') {
+    selected.value = ['all']
   } else {
-    selected.value.splice(index, 1)
+    const allOptionIndex = selected.value.indexOf('all')
+    if (allOptionIndex !== -1) {
+      selected.value.splice(allOptionIndex, 1)
+    }
+
+    const index = selected.value.indexOf(option)
+    if (index === -1) {
+      selected.value.push(option)
+    } else {
+      selected.value.splice(index, 1)
+      if (!selected.value.length) {
+        selected.value = ['all']
+      }
+    }
   }
 }
 

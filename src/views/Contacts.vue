@@ -14,7 +14,6 @@
 
       <MultiSelect
         v-model="selectedRoles"
-        class="rounded-md font-medium border border-gray-medium bg-white focus:border-gray-dark text-sm p-2  w-min"
         :options="roles"
         @update:modelValue="roleFilter"
       />
@@ -66,37 +65,17 @@ const router = useRouter()
 
 const sortingType = ref('default')
 const selectedRoles = ref(['all'])
-
 function createNewContact () {
   router.push({ name: 'upsertContact', params: { contactId: 'new' } })
 }
-
 function editContact (contactId: number) {
   router.push({ name: 'upsertContact', params: { contactId } })
 }
 
-watch(searchParam, (query) => {
-  searchContacts(query)
+watch(searchParam, () => {
+  searchContacts(searchParam.value)
 })
-watch(sortingType, (query) => {
-  contactsSorting(query)
+watch(sortingType, () => {
+  contactsSorting(sortingType.value)
 })
-// const filteredArr = computed(() => filterArr(contacts.value, searchParam.value)
-//   .filter((item) => {
-//     if (item.role !== 'all') {
-//       return item.role.includes(role.value)
-//     } else {
-//       return item.role.includes('')
-//     }
-//   })
-//   .sort(
-//     (a: IContact, b: IContact): any => {
-//       if (sortingType.value === 'ascending') {
-//         return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-//       } else if (sortingType.value === 'descending') {
-//         return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
-//       }
-//     }
-//   ))
-
 </script>

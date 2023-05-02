@@ -65,25 +65,30 @@ export const useContactsStore = defineStore('contactsStore', () => {
   }
 
   function roleFilter (roles: string []) {
-    if (!roles.includes('all')) {
-      contacts.value = contactsBase.filter((item) => {
-        return roles.includes(item.role)
-      })
-    } else {
+    if (roles.includes('all')) {
       contacts.value = [...contactsBase]
+    } else {
+      contacts.value = contactsBase.filter((contact) => {
+        return roles.includes(contact.role)
+      })
     }
   }
 
   function contactsSorting (sortingType: string) {
-    contacts.value = contactsBase.sort((a: IContact, b: IContact): any => {
-      if (sortingType === 'ascending') {
-        return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-      } else if (sortingType === 'descending') {
-        return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
-      }
-    })
+    if (sortingType === 'default') {
+      contacts.value = contactsBase.filter((baseContact) => contacts.value.find((c) => c.id === baseContact.id))
+    } else {
+      contacts.value = contacts.value.sort((a: IContact, b: IContact): any => {
+        if (sortingType === 'ascending') {
+          return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+        } else if (sortingType === 'descending') {
+          return a.name > b.name ? -1 : a.name < b.name ? 1 : 0
+        } else {
+          return 0
+        }
+      })
+    }
   }
-
   function addContact (contact: IContact) {
     contacts.value.push(contact)
   }
