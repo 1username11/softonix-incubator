@@ -1,7 +1,3 @@
-export interface IDepartment {
-  name: string
-  value: string
-}
 
 export const departments: IDepartment[] = [
   {

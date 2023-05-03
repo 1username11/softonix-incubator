@@ -1,10 +1,3 @@
-export interface IJobOpening {
-  title: string
-  id: string
-  departments: string[]
-  isClosed: boolean
-  url: string
-}
 
 export const jobOpenings: IJobOpening[] = [
   {
@@ -339,7 +332,7 @@ export const jobOpenings: IJobOpening[] = [
       'administration',
       'support'
     ],
-    isClosed: false,
+    isClosed: true,
     url: 'https://www.pepsicojobs.com/main/jobs/253208BR?lang=en-us&previousLocale=en-US'
   },
   {
@@ -6241,7 +6234,7 @@ export const jobOpenings: IJobOpening[] = [
     departments: [
       'legal'
     ],
-    isClosed: false,
+    isClosed: true,
     url: 'https://www.pepsicojobs.com/main/jobs/253882BR?lang=en-us&previousLocale=en-US'
   },
   {

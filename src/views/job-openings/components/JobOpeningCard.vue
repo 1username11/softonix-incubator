@@ -18,9 +18,9 @@
 <script lang="ts" setup>
 const props = defineProps<{
   title: string
-  id: string
+  id?: string
   departments: string
-  isClosed: boolean
+  isClosed?: boolean
   url: string
 }>()
 </script>
