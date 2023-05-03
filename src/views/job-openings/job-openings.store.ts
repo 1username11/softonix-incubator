@@ -51,22 +51,17 @@ export const useJobOpeningsStore =
       const toggle = ref(false)
 
       function jobOpeningView () {
-        if (toggle.value) {
-          jobOpeningsFilter()
-          return filteredJobOpenings.value.sort()
-        } else {
-          jobOpeningsFilter()
-          return filteredJobOpenings.value.slice(0, 5).sort()
-        }
+        return toggle.value ? filteredJobOpenings.value : filteredJobOpenings.value.slice(0, 5)
       }
 
       return {
+        jobOpeningView,
+        jobOpeningsFilter,
         showMore,
         toggle,
-        jobOpeningView,
         preparedDepartments,
         selectedDepartments,
-        jobOpeningsFilter,
-        preparedJobOpenings
+        preparedJobOpenings,
+        filteredJobOpenings
       }
     })

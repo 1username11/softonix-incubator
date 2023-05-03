@@ -28,7 +28,7 @@ import Multiselect from '@/views/job-openings/components/Multiselect.vue'
 import { useJobOpeningsStore } from '@/views/job-openings/job-openings.store'
 
 const jobOpeningsStore = useJobOpeningsStore()
-const { showMore, toggle, selectedDepartments, preparedJobOpenings } = storeToRefs(jobOpeningsStore)
+const { showMore, toggle, selectedDepartments, preparedJobOpenings, filteredJobOpenings } = storeToRefs(jobOpeningsStore)
 const { preparedDepartments, jobOpeningsFilter, jobOpeningView } = jobOpeningsStore
 
 </script>
