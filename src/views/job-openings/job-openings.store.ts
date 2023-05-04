@@ -5,6 +5,10 @@ import { departments } from '@/_homework/departments'
 export const useJobOpeningsStore =
 defineStore('JobOpeningsStore', () => {
   const selectedDepartments = ref<IDepartment[]>([])
+  const showMore = computed(() => {
+    return !(filteredJobOpenings.value.length > 5)
+  })
+  const toggle = ref(false)
 
   const preparedJobOpenings = jobOpenings.reduce((acc: IJobOpening[], jobOpening: IJobOpening) => {
     if (!jobOpening.isClosed) {
@@ -31,7 +35,7 @@ defineStore('JobOpeningsStore', () => {
       ...departments
         .filter((department) => jobOpeningsDepartments.has(department.value))
         .sort((a, b) => a.name.localeCompare(b.name)),
-      jobOpeningsDepartments.has('other') ? { name: 'Other', value: 'other' } : Object.create(null)
+      jobOpeningsDepartments.has('other') ? { name: 'Other', value: 'other' } as IDepartment : {} as IDepartment
     ].filter((department) => Object.values(department).length)
   })
 
@@ -50,11 +54,6 @@ defineStore('JobOpeningsStore', () => {
       })
     })
   }
-
-  const showMore = computed(() => {
-    return !(filteredJobOpenings.value.length > 5)
-  })
-  const toggle = ref(false)
 
   function jobOpeningView () {
     return toggle.value ? filteredJobOpenings.value : filteredJobOpenings.value.slice(0, 5)
