@@ -5,19 +5,19 @@
       :options="preparedDepartments"
       @update:modelValue="jobOpeningsFilter"
     />
+    <div class="border border-gray-medium p-2 rounded-lg bg-white text-gray-medium text-sm">
+      Showing {{ jobOpeningView().length }} out of {{ filteredJobOpenings.length }} job openings
+    </div>
     <div v-if="!showMore" class="flex items-center">
       <AppButton @click="toggle = !toggle"> {{ toggle ? 'Show less' : 'Show more' }}</AppButton>
     </div>
-    <div class="">Showing {{ jobOpeningView().length }} out of {{ preparedJobOpenings.length }} job openings</div>
   </div>
 
   <div class="flex flex-wrap">
     <JobOpeningCard
       v-for="jobOpening in jobOpeningView()"
       :key="jobOpening.id"
-      :departments="jobOpening.departments.join(', ')"
-      :title="jobOpening.title"
-      :url="jobOpening.url"
+      :jobOpening="jobOpening"
     />
   </div>
 </template>
@@ -28,7 +28,6 @@ import Multiselect from '@/views/job-openings/components/Multiselect.vue'
 import { useJobOpeningsStore } from '@/views/job-openings/job-openings.store'
 
 const jobOpeningsStore = useJobOpeningsStore()
-const { showMore, toggle, selectedDepartments, preparedJobOpenings, filteredJobOpenings } = storeToRefs(jobOpeningsStore)
+const { showMore, toggle, selectedDepartments, filteredJobOpenings } = storeToRefs(jobOpeningsStore)
 const { preparedDepartments, jobOpeningsFilter, jobOpeningView } = jobOpeningsStore
-
 </script>

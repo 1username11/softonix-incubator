@@ -3,65 +3,71 @@ import { jobOpenings } from '@/_homework/job-openings'
 import { departments } from '@/_homework/departments'
 
 export const useJobOpeningsStore =
-    defineStore('JobOpeningsStore', () => {
-      const selectedDepartments = ref<IDepartment[]>([])
-      const preparedJobOpenings = ref(jobOpenings.map(jobOpening => {
-        if (jobOpening.departments.length === 0) {
-          return {
-            ...jobOpening,
-            departments: ['other']
-          }
-        }
-        return jobOpening
-      }).filter((jobOpening: IJobOpening) => !jobOpening.isClosed))
-      const preparedDepartments = [...departmentsFilter(preparedJobOpenings.value, departments),
-        {
-          name: 'Other',
-          value: 'other'
-        }
-      ]
+defineStore('JobOpeningsStore', () => {
+  const selectedDepartments = ref<IDepartment[]>([])
 
-      function departmentsFilter (jobOpenings: IJobOpening[], departments: IDepartment[]): IDepartment[] {
-        const allDepartments: string[] = jobOpenings
-          .flatMap((jobOpening) => jobOpening.departments)
-        return departments
-          .filter((department) => allDepartments.includes(department.value))
-          .sort((a, b) => a.name.localeCompare(b.name))
+  const preparedJobOpenings = jobOpenings.reduce((acc: IJobOpening[], jobOpening: IJobOpening) => {
+    if (!jobOpening.isClosed) {
+      if (!jobOpening.departments.length) {
+        jobOpening = { ...jobOpening, departments: ['other'] }
       }
-
-      const filteredJobOpenings = ref<IJobOpening[]>(preparedJobOpenings.value)
-
-      function jobOpeningsFilter () {
-        if (selectedDepartments.value.length === 0) {
-          filteredJobOpenings.value = preparedJobOpenings.value
-          return
-        }
-        filteredJobOpenings.value = preparedJobOpenings.value.filter(jobOpening => {
-          return jobOpening.departments.some(department => {
-            return selectedDepartments.value.some(selectedDepartment => {
-              return department === selectedDepartment.value
-            })
-          })
-        })
-      }
-
-      const showMore = computed(() => {
-        return !(filteredJobOpenings.value.length > 5)
+      acc.push(jobOpening)
+    }
+    return acc
+  }, []).filter((jobOpening) => {
+    if (jobOpening.departments.includes('other')) {
+      return true
+    } else {
+      return jobOpening.departments.every(department => {
+        return departments.some(item => item.value === department)
       })
-      const toggle = ref(false)
+    }
+  })
 
-      function jobOpeningView () {
-        return toggle.value ? filteredJobOpenings.value : filteredJobOpenings.value.slice(0, 5)
-      }
+  const preparedDepartments = computed(() => {
+    const jobOpeningsDepartments = new Set(preparedJobOpenings.flatMap((jobOpening) => jobOpening.departments))
 
-      return {
-        jobOpeningView,
-        jobOpeningsFilter,
-        showMore,
-        toggle,
-        preparedDepartments,
-        selectedDepartments,
-        preparedJobOpenings,
-        filteredJobOpenings
-      }
+    return [
+      ...departments
+        .filter((department) => jobOpeningsDepartments.has(department.value))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+      jobOpeningsDepartments.has('other') ? { name: 'Other', value: 'other' } : Object.create(null)
+    ].filter((department) => Object.values(department).length)
+  })
+
+  const filteredJobOpenings = ref<IJobOpening[]>(preparedJobOpenings)
+
+  function jobOpeningsFilter () {
+    if (selectedDepartments.value.length === 0) {
+      filteredJobOpenings.value = preparedJobOpenings
+      return
+    }
+    filteredJobOpenings.value = preparedJobOpenings.filter(jobOpening => {
+      return jobOpening.departments.some(jobOpeningDepartment => {
+        return selectedDepartments.value.some(selectedDepartment => {
+          return jobOpeningDepartment === selectedDepartment.value
+        })
+      })
     })
+  }
+
+  const showMore = computed(() => {
+    return !(filteredJobOpenings.value.length > 5)
+  })
+  const toggle = ref(false)
+
+  function jobOpeningView () {
+    return toggle.value ? filteredJobOpenings.value : filteredJobOpenings.value.slice(0, 5)
+  }
+
+  return {
+    jobOpeningView,
+    jobOpeningsFilter,
+    showMore,
+    toggle,
+    preparedDepartments,
+    selectedDepartments,
+    preparedJobOpenings,
+    filteredJobOpenings
+  }
+})

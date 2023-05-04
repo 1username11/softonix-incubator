@@ -25,7 +25,7 @@
     >
       <div
         v-for="option in options"
-        :key="option"
+        :key="option.value"
         :class="{ 'bg-[#e5e5e5]': selected.includes(option) }"
         class="flex items-center justify-between p-2.5 cursor-pointer hover:bg-[#f5f5f5] capitalize"
         @click="handleSelect(option)"
@@ -43,12 +43,14 @@ const props = defineProps<{
   options: IDepartment[]
   modelValue: IDepartment[]
 }>()
+
 const emits = defineEmits(['update:modelValue'])
 const isOpen = ref(false)
 const selected = ref<IDepartment[]>(props.modelValue)
 const toggleOpen = () => {
   isOpen.value = !isOpen.value
 }
+
 const handleSelect = (option: IDepartment) => {
   const index = selected.value.indexOf(option)
   if (index === -1) {
