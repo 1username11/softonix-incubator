@@ -5,17 +5,22 @@
       :options="preparedDepartments"
       @update:modelValue="jobOpeningsFilter"
     />
-    <div class="border border-gray-medium p-2 rounded-lg bg-white text-gray-medium text-sm">
-      Showing {{ jobOpeningView().length }} out of {{ filteredJobOpenings.length }} job openings
-    </div>
-    <div v-if="!showMore" class="flex items-center">
-      <AppButton @click="toggle = !toggle"> {{ toggle ? 'Show less' : 'Show more' }}</AppButton>
+    <div v-if="filteredJobOpenings.length > 5" class="flex gap-0.5">
+      <button
+        class="border border-blue-400 px-2 py-1 rounded-lg text-blue-400 "
+        @click="paginationStep += 5"
+      >
+        Show more
+      </button>
+      <div class="p-2   text-gray-medium text-sm">
+        {{ filteredJobOpeningsPagination.length }} out of {{ filteredJobOpenings.length }}
+      </div>
     </div>
   </div>
 
   <div class="flex flex-wrap">
     <JobOpeningCard
-      v-for="jobOpening in jobOpeningView()"
+      v-for="jobOpening in filteredJobOpeningsPagination"
       :key="jobOpening.id"
       :jobOpening="jobOpening"
     />
@@ -28,6 +33,11 @@ import Multiselect from '@/views/job-openings/components/Multiselect.vue'
 import { useJobOpeningsStore } from '@/views/job-openings/job-openings.store'
 
 const jobOpeningsStore = useJobOpeningsStore()
-const { showMore, toggle, selectedDepartments, filteredJobOpenings } = storeToRefs(jobOpeningsStore)
-const { preparedDepartments, jobOpeningsFilter, jobOpeningView } = jobOpeningsStore
+const {
+  selectedDepartments,
+  filteredJobOpenings,
+  filteredJobOpeningsPagination,
+  paginationStep
+} = storeToRefs(jobOpeningsStore)
+const { preparedDepartments, jobOpeningsFilter } = jobOpeningsStore
 </script>

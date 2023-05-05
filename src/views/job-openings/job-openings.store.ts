@@ -42,6 +42,7 @@ defineStore('JobOpeningsStore', () => {
   const filteredJobOpenings = ref<IJobOpening[]>(preparedJobOpenings)
 
   function jobOpeningsFilter () {
+    paginationStep.value = 5
     if (selectedDepartments.value.length === 0) {
       filteredJobOpenings.value = preparedJobOpenings
       return
@@ -54,13 +55,14 @@ defineStore('JobOpeningsStore', () => {
       })
     })
   }
-
-  function jobOpeningView () {
-    return toggle.value ? filteredJobOpenings.value : filteredJobOpenings.value.slice(0, 5)
-  }
+  const paginationStep = ref(5)
+  const filteredJobOpeningsPagination = computed(() => {
+    return filteredJobOpenings.value.slice(0, paginationStep.value)
+  })
 
   return {
-    jobOpeningView,
+    paginationStep,
+    filteredJobOpeningsPagination,
     jobOpeningsFilter,
     showMore,
     toggle,
