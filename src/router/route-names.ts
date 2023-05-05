@@ -1,7 +1,8 @@
-import { contactRouteNames } from '@/views/contacts/contacts.routes'
-import { jobOpeningsRouteNames } from '@/views/job-openings/job-openings.routes'
+import { contactsRoutesNames } from '@/views/contacts/contacts.routes'
+import { authRoutesNames } from '@/views/auth/auth.routes'
 
 export const routeNames = {
-  ...contactRouteNames,
-  ...jobOpeningsRouteNames
+  rootPage: 'rootPage',
+  ...contactsRoutesNames,
+  ...authRoutesNames
 }

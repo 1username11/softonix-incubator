@@ -1,15 +1,25 @@
 <template>
-  <Card>
-    <div class="flex">
+  <el-card class="flex flex-col justify-between">
+    <div class="flex p-4">
       <div class="flex-grow text-sm truncate" @click.stop>
         <template v-if="editMode">
-          <input
-            ref="inputRef"
-            v-model="localContact.name"
-            type="text"
-            class="block font-medium w-full"
+          <el-form
+            ref="formRef"
+            :rules="formRules"
+            :model="localContact"
           >
-          <input v-model="localContact.description" type="text" class="block mt-1 text-gray w-full">
+            <el-form-item prop="name">
+              <el-input
+                ref="inputRef"
+                v-model="localContact.name"
+                placeholder="Name"
+                type="text"
+              />
+            </el-form-item>
+            <el-form-item prop="description">
+              <el-input v-model="localContact.description" type="text" placeholder="Description" />
+            </el-form-item>
+          </el-form>
         </template>
 
         <template v-else>
@@ -41,55 +51,70 @@
       </div>
     </div>
 
-    <div class="flex justify-end mt-2 gap-2">
+    <div class="flex justify-end my-2 gap-0.5 px-4">
       <template v-if="editMode">
-        <span
+        <el-button
+          size="small"
           class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
           @click.stop="editMode = false"
-        >Cancel</span>
+        >
+          Cancel
+        </el-button>
 
-        <span
+        <el-button
+          size="small"
           class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
           @click.stop="onSave"
-        >Save</span>
+        >
+          Save
+        </el-button>
       </template>
 
       <template v-else>
-        <span
+        <el-button
+          size="small"
           class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
           @click.stop="triggerEditMode"
-        >Edit</span>
+        >
+          Edit
+        </el-button>
 
-        <span
+        <el-button
+          size="small"
           class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
           @click.stop="$emit('delete', contact)"
-        >Delete</span>
+        >
+          Delete
+        </el-button>
       </template>
     </div>
 
-    <template #footer>
-      <div class="flex text-sm font-medium text-gray-dark border-t border-gray-ultra-light" @click.stop>
-        <div class="flex items-center justify-center flex-1 py-4 cursor-pointer hover:text-gray">
-          <IconEnvelope />
-          <span class="ml-3">Email</span>
-        </div>
-        <div
-          class="flex items-center justify-center flex-1 py-4 border-l
-            border-gray-ultra-light cursor-pointer hover:text-gray"
-        >
-          <IconPhone />
-          <span class="ml-3">Call</span>
-        </div>
+    <div class="flex text-sm font-medium text-gray-dark border-t border-gray-ultra-light" @click.stop>
+      <div class="flex items-center justify-center flex-1 py-4 cursor-pointer hover:text-gray">
+        <IconEnvelope />
+        <span class="ml-3">Email</span>
       </div>
-    </template>
-  </Card>
+      <div
+        class="flex items-center justify-center flex-1 py-4 border-l
+            border-gray-ultra-light cursor-pointer hover:text-gray"
+      >
+        <IconPhone />
+        <span class="ml-3">Call</span>
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
+import type { FormRules } from 'element-plus'
+
 const props = defineProps<{
   contact: IContact
 }>()
-
+const formRules: FormRules = reactive({
+  name: [useRequiredRule()],
+  description: [useRequiredRule()]
+})
 const emit = defineEmits(['delete', 'save'])
 
 const inputRef = ref<HTMLInputElement>()

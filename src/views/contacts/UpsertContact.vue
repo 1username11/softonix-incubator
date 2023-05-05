@@ -1,38 +1,47 @@
 <template>
   <div class="flex justify-center">
-    <Card :title="cardTitle" class="w-[350px]">
+    <el-card :title="cardTitle" class="w-[350px] p-6">
       <div class="space-y-4">
-        <AppInput v-model.trim="contactForm.name" placeholder="Name" />
-
-        <AppInput v-model.trim="contactForm.description" placeholder="Description" />
-
-        <AppInput v-model.trim="contactForm.image" placeholder="Image Link" />
+        <el-form
+          :model="contactForm"
+          :rules="formRules"
+        >
+          <el-form-item prop="name">
+            <el-input v-model.trim="contactForm.name" placeholder="Name" />
+          </el-form-item>
+          <el-form-item prop="description">
+            <el-input v-model.trim="contactForm.description" placeholder="Description" />
+          </el-form-item>
+          <el-form-item prop="image">
+            <el-input v-model.trim="contactForm.image" placeholder="Image Link" />
+          </el-form-item>
+        </el-form>
       </div>
 
-      <template #footer>
-        <div class="px-6 pb-6 mt-2 flex gap-3">
-          <AppButton class="flex-auto" @click="$router.back">
-            Cancel
-          </AppButton>
+      <div class="mt-2 flex gap-3">
+        <el-button type="warning" class="flex-auto" @click="$router.back">
+          Cancel
+        </el-button>
 
-          <AppButton v-if="currentContact" class="flex-auto" @click="onDelete">
-            Delete
-          </AppButton>
+        <el-button v-if="currentContact" type="danger" class="flex-auto" @click="onDelete">
+          Delete
+        </el-button>
 
-          <AppButton class="flex-auto" :disabled="!isFormValid" @click="onSave">
-            <template #icon>
-              <IconPlus class="w-5 h-5" />
-            </template>
+        <el-button type="primary" class="flex-auto" :disabled="!isFormValid" @click="onSave">
+          <template #icon>
+            <IconPlus class="w-5 h-5" />
+          </template>
 
-            Save
-          </AppButton>
-        </div>
-      </template>
-    </Card>
+          Save
+        </el-button>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { FormRules } from 'element-plus'
+
 const router = useRouter()
 const route = useRoute()
 
@@ -75,4 +84,10 @@ function onSave () {
   }
   router.push({ name: $routeNames.contacts })
 }
+
+const formRules: FormRules = useElFormRules({
+  name: [useRequiredRule()],
+  description: [useRequiredRule()]
+})
+
 </script>
