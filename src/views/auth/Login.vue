@@ -2,11 +2,12 @@
   <div class="flex items-center justify-center h-full">
     <el-card class="p-5 w-[500px]">
       <template #header>
-        <p class="font-semibold text-xl mb-1">Login</p>
+        <p class="font-semibold text-xl mb-2 border-none">Login</p>
       </template>
 
       <el-form
         ref="formRef"
+        class="mt-4"
         label-position="top"
         :rules="formRules"
         :model="formModel"

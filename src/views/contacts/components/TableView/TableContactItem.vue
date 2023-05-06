@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="contacts"
-    :cell-style="{ padding: '10px', cursor: 'pointer' }"
+    :cell-style="{ padding: '10px', cursor: 'pointer'}"
     @row-click="(e) => onCardClickEdit(e.id)"
   >
     <el-table-column prop="image" label="Image" @click="editContact">
