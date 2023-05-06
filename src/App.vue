@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1440px] mx-auto p-6">
-    <RouterView />
+  <div class="w-full mx-auto p-6 h-full">
+    <RouterView class="w-full h-full" />
   </div>
 </template>

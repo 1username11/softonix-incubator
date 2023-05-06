@@ -1,3 +1,5 @@
+import { router } from '@/router'
+
 export const useContactsStore = defineStore('contactsStore', () => {
   const contacts = ref<IContact[]>([
     {
@@ -19,6 +21,7 @@ export const useContactsStore = defineStore('contactsStore', () => {
       image: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
     }
   ])
+  const { $routeNames } = useGlobalProperties()
 
   function addContact (contact: IContact) {
     contacts.value.push(contact)
@@ -33,8 +36,21 @@ export const useContactsStore = defineStore('contactsStore', () => {
     const currentIndex = contacts.value.findIndex(c => c.id === contact.id)
     contacts.value.splice(currentIndex, 1)
   }
+  function editContact (contactId: number) {
+    router.push({ name: $routeNames.upsertContact, params: { contactId } })
+  }
+  const nameAbbrv = computed((name: string) => {
+    return name.split(' ').reduce((acc, cur) => {
+      if (acc.length < 2) {
+        acc = acc.concat(cur[0])
+      }
+      return acc
+    }, '')
+  })
 
   return {
+    editContact,
+    nameAbbrv,
     contacts,
     addContact,
     deleteContact,

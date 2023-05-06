@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[500px] m-auto">
-    <el-card>
+    <el-card class="p-5">
       <template #header>
         <p class="font-semibold text-xl">Login</p>
       </template>

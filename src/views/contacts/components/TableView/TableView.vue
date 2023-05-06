@@ -1,9 +1,9 @@
 <template>
-  <TableContactItem :contacts="contacts" />
+  <TableContactItem :contacts="contacts" @onCardClickEdit="editContact" />
 </template>
 
 <script lang="ts" setup>
 const contactStore = useContactsStore()
 const { contacts } = storeToRefs(contactStore)
-const editMode = ref(false)
+const { editContact } = contactStore
 </script>
