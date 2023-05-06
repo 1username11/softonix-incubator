@@ -1,23 +1,24 @@
 <template>
   <el-table
-    :data="tableData"
+    :data="contacts"
     :cell-style="{ padding: '10px', cursor: 'pointer' }"
     @row-click="(e) => onCardClickEdit(e.id)"
   >
     <el-table-column prop="image" label="Image" @click="editContact">
       <template #default="{ row }">
         <div
-          v-if="!row.image"
+          v-if="imageHasError || !row.image"
           class="flex justify-center items-center w-[80px] h-[80px] text-center m-auto
           border border-gray-medium bg-gray-ultra-light rounded-full uppercase"
         >
-          <span>{{ nameAbbrv(row.name) }}</span>
+          <span>{{ nameAbbrv(contacts.length - 1) }}</span>
         </div>
         <img
           v-else
           class="object-cover w-[80px] h-[80px] rounded-full mx-auto block"
           :src="row.image"
-          :alt="row.name"
+          @error="imageHasError = true"
+          @load="imageHasError = false"
         >
       </template>
     </el-table-column>
@@ -64,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-const contactStore = useContactsStore()
-const { nameAbbrv } = storeToRefs(contactStore)
 const emit = defineEmits<{ (e: 'onCardClickEdit', value: number): void }>()
 
 const contactsStore = useContactsStore()
@@ -80,16 +79,14 @@ const localContact = ref<Omit<IContact, 'id'>>({
   image: ''
 })
 
-const tableData = computed(() => {
-  return contacts.value.map(({ id, description, name, image }) => {
-    return {
-      id,
-      description,
-      name,
-      image
+const nameAbbrv = function (id: number) {
+  return contacts.value[id].name.split(' ').reduce((acc, cur) => {
+    if (acc.length < 2) {
+      acc = acc.concat(cur[0])
     }
-  })
-})
+    return acc
+  }, '')
+}
 
 const triggerEditMode = async ({ id, ...rest }: IContact) => {
   contactIdBeingEdited.value = id
@@ -106,9 +103,6 @@ const onUpdateContact = (contact: IContact) => {
 const onCardClickEdit = (id: number) => {
   emit('onCardClickEdit', id)
 }
+
+const imageHasError = ref(false)
 </script>
-<style scoped>
-el-table-column{
-    text-align: center;
-}
-</style>

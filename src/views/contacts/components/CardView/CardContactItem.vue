@@ -1,7 +1,6 @@
 <template>
   <el-card
     :body-style="{ padding: '0px' }"
-    class=""
   >
     <div class="flex flex-col h-full justify-between">
       <div class="flex px-4 pt-4 pb-0">

@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-[500px] m-auto">
-    <el-card class="p-5">
+  <div class="flex items-center justify-center h-full">
+    <el-card class="p-5 w-[500px]">
       <template #header>
-        <p class="font-semibold text-xl">Login</p>
+        <p class="font-semibold text-xl mb-1">Login</p>
       </template>
 
       <el-form
@@ -29,6 +29,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { FormRules } from 'element-plus'
+
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
@@ -39,7 +41,7 @@ const formModel = useElFormModel({
   password: ''
 })
 
-const formRules = useElFormRules({
+const formRules: FormRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
   password: [useRequiredRule(), useMinLenRule(6)]
 })

@@ -1,4 +1,4 @@
-<template class="w-full h-full">
+<template>
   <el-tabs type="border-card" class="w-full h-full">
     <Header />
     <el-tab-pane label="Card View">
