@@ -1,13 +1,10 @@
 <template>
-  <el-card
-    :body-style="{ padding: '0px' }"
-  >
+  <el-card :body-style="{ padding: '0px' }">
     <div class="flex flex-col h-full justify-between">
       <div class="flex px-4 pt-4 pb-0">
         <div class="flex-grow text-sm truncate" @click.stop>
           <template v-if="editMode">
             <el-form
-              ref="formRef"
               :rules="formRules"
               :model="localContact"
               class="space-y-0"
@@ -17,14 +14,12 @@
                   ref="inputRef"
                   v-model="localContact.name"
                   placeholder="Name"
-                  type="text"
                   class="py-0 font-medium h-5"
                 />
               </el-form-item>
               <el-form-item prop="description">
                 <el-input
                   v-model="localContact.description"
-                  type="text"
                   placeholder="Description"
                   class="py-0 font-medium h-5"
                 />
@@ -47,7 +42,8 @@
           <span
             v-if="imageHasError || !contact.image"
             class="font-medium uppercase"
-          >{{ nameAbbrv }}
+          >
+            {{ nameAbbrv }}
           </span>
 
           <img
@@ -64,15 +60,15 @@
       <div class="flex justify-end my-2 px-4">
         <template v-if="editMode">
           <el-button
-            size="small"
-            type="success"
+            :size="$elComponentSize.small"
+            :type="$elComponentType.success"
             @click.stop="onSave"
           >
             Save
           </el-button>
           <el-button
-            type="warning"
-            size="small"
+            :size="$elComponentSize.small"
+            :type="$elComponentType.warning"
             @click.stop="editMode = false"
           >
             Cancel
@@ -81,16 +77,16 @@
 
         <template v-else>
           <el-button
-            type="primary"
-            size="small"
+            :size="$elComponentSize.small"
+            :type="$elComponentType.primary"
             @click.stop="triggerEditMode"
           >
             Edit
           </el-button>
 
           <el-button
-            type="danger"
-            size="small"
+            :size="$elComponentSize.small"
+            :type="$elComponentType.danger"
             @click.stop="$emit('delete', contact)"
           >
             Delete
@@ -120,14 +116,15 @@ import type { FormRules } from 'element-plus'
 const props = defineProps<{
   contact: IContact
 }>()
+
+const imageHasError = ref(false)
+const editMode = ref(false)
 const formRules: FormRules = reactive({
   name: [useRequiredRule()],
   description: [useRequiredRule()]
 })
 const emit = defineEmits(['delete', 'save'])
-
 const inputRef = ref<HTMLInputElement>()
-
 const localContact = ref<Omit<IContact, 'id'>>({
   name: '',
   description: '',
@@ -143,19 +140,14 @@ const nameAbbrv = computed(() => {
   }, '')
 })
 
-const editMode = ref(false)
-
 async function triggerEditMode () {
   editMode.value = true
   localContact.value = { ...props.contact }
   await nextTick()
   inputRef.value?.focus()
 }
-
 function onSave () {
   emit('save', localContact.value)
   editMode.value = false
 }
-
-const imageHasError = ref(false)
 </script>

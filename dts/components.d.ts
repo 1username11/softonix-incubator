@@ -32,7 +32,7 @@ declare module '@vue/runtime-core' {
     IconPlus: typeof import('./../src/components/icons/IconPlus.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TableContactItem: typeof import('./../src/views/contacts/components/TableView/TableContactItem.vue')['default']
+    TableContactItem: typeof import('@/views/contacts/components/TableView/TableView.vue')['default']
     TableView: typeof import('./../src/views/contacts/components/TableView/TableView.vue')['default']
   }
 }
