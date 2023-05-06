@@ -1,25 +1,25 @@
 <template>
   <el-card
     :body-style="{ padding: '0px' }"
-    class="flex flex-col justify-between el-card__header min-h-[211.2px]"
+    class=""
   >
-    <template #header>
-      <div class="flex px-4 pt-4 pb-0 ">
+    <div class="flex flex-col h-full justify-between">
+      <div class="flex px-4 pt-4 pb-0">
         <div class="flex-grow text-sm truncate" @click.stop>
           <template v-if="editMode">
             <el-form
               ref="formRef"
               :rules="formRules"
               :model="localContact"
-              class=" gap-0.5"
+              class="space-y-0"
             >
-              <el-form-item prop="name">
+              <el-form-item prop="name" class="mb-1">
                 <el-input
                   ref="inputRef"
                   v-model="localContact.name"
                   placeholder="Name"
                   type="text"
-                  class="py-0"
+                  class="py-0 font-medium h-5"
                 />
               </el-form-item>
               <el-form-item prop="description">
@@ -27,7 +27,7 @@
                   v-model="localContact.description"
                   type="text"
                   placeholder="Description"
-                  class="py-0"
+                  class="py-0 font-medium h-5"
                 />
               </el-form-item>
             </el-form>
@@ -67,7 +67,6 @@
           <el-button
             size="small"
             type="success"
-            class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
             @click.stop="onSave"
           >
             Save
@@ -75,7 +74,6 @@
           <el-button
             type="warning"
             size="small"
-            class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
             @click.stop="editMode = false"
           >
             Cancel
@@ -86,7 +84,6 @@
           <el-button
             type="primary"
             size="small"
-            class="text-blue-500 font-medium text-xs cursor-pointer hover:underline"
             @click.stop="triggerEditMode"
           >
             Edit
@@ -95,25 +92,24 @@
           <el-button
             type="danger"
             size="small"
-            class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
             @click.stop="$emit('delete', contact)"
           >
             Delete
           </el-button>
         </template>
       </div>
-    </template>
-    <div class="flex text-sm font-medium text-gray-dark border-t border-gray-ultra-light" @click.stop>
-      <div class="flex items-center justify-center flex-1 py-4 cursor-pointer hover:text-gray">
-        <IconEnvelope />
-        <span class="ml-3">Email</span>
-      </div>
-      <div
-        class="flex items-center justify-center flex-1 py-4 border-l
+      <div class="flex text-sm font-medium text-gray-dark border-t border-gray-ultra-light" @click.stop>
+        <div class="flex items-center justify-center flex-1 py-4 cursor-pointer hover:text-gray">
+          <IconEnvelope />
+          <span class="ml-3">Email</span>
+        </div>
+        <div
+          class="flex items-center justify-center flex-1 py-4 border-l
             border-gray-ultra-light cursor-pointer hover:text-gray"
-      >
-        <IconPhone />
-        <span class="ml-3">Call</span>
+        >
+          <IconPhone />
+          <span class="ml-3">Call</span>
+        </div>
       </div>
     </div>
   </el-card>
@@ -164,8 +160,3 @@ function onSave () {
 
 const imageHasError = ref(false)
 </script>
-<style scoped>
-.el-card__header {
-    border-bottom: none;
-}
-</style>

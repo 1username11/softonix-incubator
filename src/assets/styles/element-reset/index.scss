@@ -21,3 +21,8 @@
 @use "element-plus/theme-chalk/src/card";
 @use "element-plus/theme-chalk/src/tabs";
 @use "element-plus/theme-chalk/src/table";
+.el-card{
+  .el-card__header{
+    border-bottom: none;
+  }
+}

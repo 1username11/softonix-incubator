@@ -107,3 +107,8 @@ const onCardClickEdit = (id: number) => {
   emit('onCardClickEdit', id)
 }
 </script>
+<style scoped>
+el-table-column{
+    text-align: center;
+}
+</style>
