@@ -72,8 +72,10 @@ const isFormValid = computed(() => {
 })
 
 function onDelete () {
-  deleteContact(currentContact.value as IContact)
-  router.replace({ name: $routeNames.contacts })
+  if (currentContact.value) {
+    deleteContact(currentContact.value.id)
+    router.replace({ name: $routeNames.contacts })
+  }
 }
 
 function onSave () {

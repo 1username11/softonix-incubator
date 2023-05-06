@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppButton: typeof import('./../src/components/AppButton.vue')['default']
     AppInput: typeof import('./../src/components/AppInput.vue')['default']
+    Avatar: typeof import('./../src/views/contacts/components/TableView/components/Avatar.vue')['default']
     CarContactItem: typeof import('./../src/views/contacts/components/CardView/CarContactItem.vue')['default']
     Card: typeof import('./../src/components/Card.vue')['default']
     CardContactItem: typeof import('./../src/views/contacts/components/CardView/CardContactItem.vue')['default']
@@ -32,7 +33,7 @@ declare module '@vue/runtime-core' {
     IconPlus: typeof import('./../src/components/icons/IconPlus.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TableContactItem: typeof import('@/views/contacts/components/TableView/TableView.vue')['default']
+    TableContactItem: typeof import('./../src/views/contacts/components/TableView/components/TableContactItem.vue')['default']
     TableView: typeof import('./../src/views/contacts/components/TableView/TableView.vue')['default']
   }
 }
