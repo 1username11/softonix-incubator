@@ -13,6 +13,7 @@
         >
           <span>{{ nameAbbrv(contacts.length - 1) }}</span>
         </div>
+
         <img
           v-else
           class="object-cover w-[80px] h-[80px] rounded-full mx-auto block"
@@ -39,6 +40,7 @@
         <p v-else class="text-center truncate">{{ row.description }}</p>
       </template>
     </el-table-column>
+
     <el-table-column label="Actions">
       <template #default="{ row }">
         <div v-if="contactIdBeingEdited === row.id" class="text-center">
@@ -55,6 +57,7 @@
             Cancel
           </el-button>
         </div>
+
         <div v-else class="text-center">
           <el-button type="primary" @click.stop="triggerEditMode(row)">Edit</el-button>
           <el-button type="danger" @click.stop="deleteContact(row)">Delete</el-button>

@@ -1,5 +1,8 @@
 <template>
-  <TableContactItem :contacts="contacts" class="" @onCardClickEdit="editContact" />
+  <TableContactItem
+    :contacts="contacts"
+    @onCardClickEdit="editContact"
+  />
 </template>
 
 <script lang="ts" setup>
