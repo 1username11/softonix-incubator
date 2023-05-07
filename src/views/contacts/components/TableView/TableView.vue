@@ -5,10 +5,11 @@
     @row-click="editContact($event.id)"
   >
     <TableContactItem
-      v-for="colum in colums"
-      :key="colum"
-      :prop="colum"
-      :label="colum"
+      v-for="column in columns"
+      :key="column"
+      :prop="column"
+      :label="column"
+      header-align="center"
     />
   </el-table>
 </template>
@@ -17,5 +18,5 @@
 const contactsStore = useContactsStore()
 const { contacts } = storeToRefs(contactsStore)
 const { editContact } = contactsStore
-const colums = ['image', 'name', 'description', 'actions']
+const columns = ['image', 'name', 'description', 'actions']
 </script>
