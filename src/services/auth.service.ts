@@ -1,7 +1,7 @@
 class AuthService {
   // auth/v1/token?grant_type=password
   login (payload: ILoginRequest) {
-    return useHttp.post('auth/v1/token?grant_type=password', { email: 'voolve@gmail.com', password: '11111111' })
+    return useHttp.post('auth/v1/token?grant_type=password', payload)
   }
 
   // POST: auth/v1/signup, Payload: { email: string, password: string }

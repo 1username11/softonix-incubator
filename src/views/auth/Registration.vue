@@ -26,6 +26,12 @@
         <el-button native-type="submit" :type="$elComponentType.primary">
           Sign Up
         </el-button>
+        <el-button
+          :type="$elComponentType.primary"
+          @click="router.push({ name: $routeNames.login })"
+        >
+          Login
+        </el-button>
       </el-form>
     </el-card>
   </div>
@@ -51,18 +57,19 @@ const formRules = useElFormRules({
   confirmPassword: [useRequiredRule(), useMinLenRule(6)]
 })
 
-const payload = {
-  email: formModel.email,
-  password: formModel.password
-}
 function submit () {
+  const payload: ILoginRequest = {
+    email: formModel.email,
+    password: formModel.password
+  }
   try {
     formRef.value?.validate(isValid => {
-      if (isValid && formModel.password === formModel.confirmPassword) {
+      if (isValid) {
         loading.value = true
-
         registration(payload)
-          .then(() => router.push({ name: $routeNames.login }))
+          .then(() => {
+            return router.push({ name: $routeNames.login })
+          })
           .finally(() => (loading.value = false))
       }
     })

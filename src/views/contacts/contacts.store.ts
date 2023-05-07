@@ -1,27 +1,46 @@
+import { contactsService } from '@/views/contacts/contacts.service'
+
 export const useContactsStore = defineStore('contactsStore', () => {
   const contacts = ref<IContact[]>([])
 
   const getContacts = () => {
+    console.log(contacts.value)
     if (contacts.value.length) return
 
     return contactsService.getContacts()
       .then(res => {
+        console.log('getContacts', res)
         contacts.value = res
       })
   }
 
-  function addContact (contact: IContact) {
-    contacts.value.push(contact)
+  async function addContact (payload: IContact) {
+    try {
+      const contact = await contactsService.createContact(payload)
+      contacts.value.push(contact)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  function updateContact (contact: IContact) {
-    const currentIndex = contacts.value.findIndex(c => c.id === contact.id)
-    contacts.value[currentIndex] = { ...contact }
+  async function updateContact (contact: IContact) {
+    try {
+      await contactsService.updateContact(contact)
+      const currentIndex = contacts.value.findIndex(c => c.id === contact.id)
+      contacts.value[currentIndex] = { ...contact }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  function deleteContact (contact: IContact) {
-    const currentIndex = contacts.value.findIndex(c => c.id === contact.id)
-    contacts.value.splice(currentIndex, 1)
+  async function deleteContact (contact: IContact) {
+    try {
+      await contactsService.deleteContact(contact.id)
+      const currentIndex = contacts.value.findIndex(c => c.id === contact.id)
+      contacts.value.splice(currentIndex, 1)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return {

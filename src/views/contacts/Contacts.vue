@@ -19,15 +19,19 @@
   </div>
 
   <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
-    <ContactItem
+    <template
       v-for="contact in contacts"
       :key="contact.id"
-      class="cursor-pointer"
-      :contact="contact"
-      @click="editContact(contact.id)"
-      @delete="deleteContact"
-      @save="updateContact"
-    />
+    >
+      <ContactItem
+        v-if="contact"
+        class="cursor-pointer"
+        :contact="contact"
+        @click="editContact(contact.id)"
+        @delete="deleteContact"
+        @save="updateContact"
+      />
+    </template>
   </div>
 </template>
 
@@ -52,4 +56,6 @@ onMounted(() => {
   // get data for the page
   getContacts()
 })
+
+console.log(contacts.value)
 </script>
