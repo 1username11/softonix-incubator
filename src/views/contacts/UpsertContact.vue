@@ -36,7 +36,7 @@
 const router = useRouter()
 const route = useRoute()
 const { $routeNames } = useGlobalProperties()
-const { contacts, addContact, updateContact, deleteContact, getContacts } = useContactsStore()
+const { contacts, addContact, updateContact, deleteContact } = useContactsStore()
 
 const currentContact = computed(() => contacts.find(c => c.id === +route.params.contactId))
 
@@ -58,9 +58,9 @@ const isFormValid = computed(() => {
   return Object.values(contact).every(c => !!c)
 })
 
-function onDelete () {
-  deleteContact(currentContact.value as IContact)
-  router.replace({ name: $routeNames.contacts })
+async function onDelete () {
+  await deleteContact(currentContact.value as IContact)
+  await router.replace({ name: $routeNames.contacts })
 }
 
 async function onSave () {
@@ -69,7 +69,6 @@ async function onSave () {
   } else {
     await addContact(contactForm)
   }
-
   await router.push({ name: $routeNames.contacts })
 }
 </script>

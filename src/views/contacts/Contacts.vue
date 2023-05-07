@@ -53,9 +53,7 @@ function editContact (contactId: number) {
 }
 
 onMounted(() => {
-  // get data for the page
   getContacts()
 })
 
-console.log(contacts.value)
 </script>
