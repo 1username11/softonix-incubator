@@ -14,6 +14,9 @@ export const useAuthStore = defineStore('authStore', () => {
         setToken(res.access_token)
       })
   }
+  function registration (payload: ILoginRequest) {
+    return authService.register(payload)
+  }
 
   function logout () {
     localStorage.removeItem('si-token')
@@ -21,6 +24,7 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   return {
+    registration,
     accessToken,
     login,
     logout

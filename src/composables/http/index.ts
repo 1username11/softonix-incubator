@@ -14,7 +14,8 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers = {
         ...config.headers,
-        authorization: `Bearer ${accessToken}`
+        authorization: `Bearer ${accessToken}`,
+        apikey: import.meta.env.VITE_API_KEY
       }
     }
     return config
