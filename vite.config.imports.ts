@@ -1,9 +1,10 @@
+import type { ConfigEnv } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 /* CONFIGURATION FOR SCRIPTS AUTO-IMPORT */
-export const ImportsBuilder = () => AutoImport({
-  dts: './dts/auto-imports.d.ts',
+export const ImportsBuilder = (config: ConfigEnv) => AutoImport({
+  dts: config.command === 'serve' && './dts/auto-imports.d.ts',
 
   dirs: [
     './src/composables',
@@ -14,6 +15,10 @@ export const ImportsBuilder = () => AutoImport({
     './src/views/**/*.service.ts'
   ],
 
+  resolvers: [
+    ElementPlusResolver()
+  ],
+
   eslintrc: {
     enabled: true
   },
@@ -22,6 +27,5 @@ export const ImportsBuilder = () => AutoImport({
     'vue',
     'vue-router',
     'pinia'
-  ],
-  resolvers: [ElementPlusResolver()]
+  ]
 })
