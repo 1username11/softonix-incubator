@@ -58,6 +58,7 @@ function createNewContact () {
 function editContact (contactId: number) {
   router.push({ name: $routeNames.upsertContact, params: { contactId } })
 }
+
 const jwtExpireIn = computed(() => {
   const jwtValue = accessToken.value
   if (!jwtValue) return null
