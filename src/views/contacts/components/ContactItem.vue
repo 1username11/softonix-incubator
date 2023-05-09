@@ -62,7 +62,7 @@
 
         <span
           class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
-          @click.stop="$emit('delete', contact)"
+          @click.stop="onDelete"
         >Delete</span>
       </template>
     </div>
@@ -90,7 +90,7 @@ const props = defineProps<{
   contact: IContact
 }>()
 
-const emit = defineEmits(['delete', 'save'])
+const emit = defineEmits(['delete', 'save', 'getContacts'])
 
 const inputRef = ref<HTMLInputElement>()
 
@@ -120,7 +120,12 @@ async function triggerEditMode () {
 
 function onSave () {
   emit('save', localContact.value)
+  emit('getContacts')
   editMode.value = false
+}
+function onDelete () {
+  emit('delete', props.contact)
+  emit('getContacts')
 }
 
 const imageHasError = ref(false)

@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ContactItem: typeof import('./../src/views/contacts/components/ContactItem.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
+    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
