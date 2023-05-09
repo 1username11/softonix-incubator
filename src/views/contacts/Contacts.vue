@@ -81,7 +81,7 @@ const jwtExpireIn = computed(() => {
     const hours = date.getHours().toString().padStart(2, '0')
     const minutes = date.getMinutes().toString().padStart(2, '0')
 
-    return `authorization expire in ${dayOfMonth} ${monthName} ${dayOfWeek}  ${hours}:${minutes}`
+    return `authorization will expire on ${dayOfMonth} ${monthName} ${dayOfWeek}  ${hours}:${minutes}`
   } catch (e) {
     console.log('Error decoding JWT:', e)
     return null
