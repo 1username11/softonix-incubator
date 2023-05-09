@@ -9,11 +9,12 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppButton: typeof import('./../src/components/AppButton.vue')['default']
     AppInput: typeof import('./../src/components/AppInput.vue')['default']
+    AsyncContacts: typeof import('./../src/views/contacts/components/AsyncContacts.vue')['default']
+    AsyncExample: typeof import('./../src/views/contacts/components/AsyncExample.vue')['default']
     Card: typeof import('./../src/components/Card.vue')['default']
     ContactItem: typeof import('./../src/views/contacts/components/ContactItem.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
-    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']

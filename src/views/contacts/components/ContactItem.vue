@@ -25,7 +25,7 @@
       border border-gray-medium bg-gray-ultra-light"
       >
         <span
-          v-if="imageHasError || !contact.image"
+          v-if="imageHasError"
           class="font-medium uppercase"
         >{{ nameAbbrv }}
         </span>
@@ -62,7 +62,7 @@
 
         <span
           class="text-red-500 font-medium text-xs cursor-pointer hover:underline"
-          @click.stop="onDelete"
+          @click.stop="$emit('delete', contact)"
         >Delete</span>
       </template>
     </div>
@@ -90,7 +90,7 @@ const props = defineProps<{
   contact: IContact
 }>()
 
-const emit = defineEmits(['delete', 'save', 'getContacts'])
+const emit = defineEmits(['delete', 'save'])
 
 const inputRef = ref<HTMLInputElement>()
 
@@ -120,12 +120,7 @@ async function triggerEditMode () {
 
 function onSave () {
   emit('save', localContact.value)
-  emit('getContacts')
   editMode.value = false
-}
-function onDelete () {
-  emit('delete', props.contact)
-  emit('getContacts')
 }
 
 const imageHasError = ref(false)

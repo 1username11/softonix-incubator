@@ -1,9 +1,4 @@
-@tailwind base;
-
 @import './fonts';
 @import './base';
-
+@import './tailwind';
 @import './element-reset';
-
-@tailwind components;
-@tailwind utilities;

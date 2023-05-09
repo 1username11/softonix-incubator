@@ -58,17 +58,17 @@ const isFormValid = computed(() => {
   return Object.values(contact).every(c => !!c)
 })
 
-async function onDelete () {
-  await deleteContact(currentContact.value as IContact)
-  await router.replace({ name: $routeNames.contacts })
+function onDelete () {
+  deleteContact(currentContact.value as IContact)
+  router.replace({ name: $routeNames.contacts })
 }
 
-async function onSave () {
+function onSave () {
   if (currentContact.value) {
-    await updateContact(contactForm)
+    updateContact(contactForm)
   } else {
-    await addContact(contactForm)
+    addContact(contactForm)
   }
-  await router.push({ name: $routeNames.contacts })
+  router.push({ name: $routeNames.contacts })
 }
 </script>
