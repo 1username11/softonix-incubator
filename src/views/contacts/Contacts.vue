@@ -19,6 +19,7 @@
   </div>
 
   <AsyncExample v-if="!loading" />
+  <LazyImage :src="imageSrc" />
 
   <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
     <ContactItem
@@ -44,6 +45,7 @@ const contactsStore = useContactsStore()
 const { getContacts, updateContact, deleteContact } = contactsStore
 const { contacts } = storeToRefs(contactsStore)
 const loading = ref(true)
+const imageSrc = ref<string>('@/assets/TestImage.jpeg')
 
 function createNewContact () {
   router.push({ name: $routeNames.upsertContact, params: { contactId: 'new' } })
