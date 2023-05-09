@@ -44,7 +44,9 @@
 const { $routeNames } = useGlobalProperties()
 
 const router = useRouter()
-const { logout, decodedToken } = useAuthStore()
+const authStore = useAuthStore()
+const { logout } = authStore
+const { accessToken } = storeToRefs(authStore)
 const contactsStore = useContactsStore()
 const { getContacts, updateContact, deleteContact } = contactsStore
 const { contacts } = storeToRefs(contactsStore)
@@ -56,29 +58,33 @@ function createNewContact () {
 function editContact (contactId: number) {
   router.push({ name: $routeNames.upsertContact, params: { contactId } })
 }
-const jwt = ref(localStorage.getItem('si-token'))
 const jwtExpireIn = computed(() => {
-  const jwtValue = jwt.value
+  const jwtValue = accessToken.value
   if (!jwtValue) return null
-  const decodedJwt = JSON.parse(atob(jwtValue.split('.')[1]))
-  const date = new Date(decodedJwt.exp * 1000)
 
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ]
-  const daysOfWeek = [
-    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-  ]
+  try {
+    const decodedJwt = JSON.parse(atob(jwtValue.split('.')[1]))
+    const date = new Date(decodedJwt.exp * 1000)
 
-  const monthName = months[date.getMonth()]
-  const dayOfWeek = daysOfWeek[date.getDay()]
-  const dayOfMonth = date.getDate()
-  const hours = date.getHours().toString().padStart(2, '0')
-  const minutes = date.getMinutes().toString().padStart(2, '0')
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+    const daysOfWeek = [
+      'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+    ]
 
-  const dateString = `expire in ${dayOfMonth} ${monthName} ${dayOfWeek}  ${hours}:${minutes}`
-  return dateString
+    const monthName = months[date.getMonth()]
+    const dayOfWeek = daysOfWeek[date.getDay()]
+    const dayOfMonth = date.getDate()
+    const hours = date.getHours().toString().padStart(2, '0')
+    const minutes = date.getMinutes().toString().padStart(2, '0')
+
+    return `authorization expire in ${dayOfMonth} ${monthName} ${dayOfWeek}  ${hours}:${minutes}`
+  } catch (e) {
+    console.log('Error decoding JWT:', e)
+    return null
+  }
 })
 
 onMounted(() => {
