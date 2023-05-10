@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-4 mb-[2000px]">
     <h3 class="font-medium m-0">Contact list</h3>
 
     <el-button :type="$elComponentType.primary" @click="createNewContact">
@@ -18,9 +18,8 @@
     </el-button>
   </div>
 
-  <AsyncExample v-if="!loading" />
+  <!--  <AsyncExample v-if="!loading" />-->
   <LazyImage :src="imageSrc" />
-
   <div class="grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] grid gap-5 my-5">
     <ContactItem
       v-for="contact in contacts"
@@ -45,7 +44,7 @@ const contactsStore = useContactsStore()
 const { getContacts, updateContact, deleteContact } = contactsStore
 const { contacts } = storeToRefs(contactsStore)
 const loading = ref(true)
-const imageSrc = ref<string>('@/assets/TestImage.jpeg')
+const imageSrc = ref<string>('src/assets/TestImage.jpeg')
 
 function createNewContact () {
   router.push({ name: $routeNames.upsertContact, params: { contactId: 'new' } })
