@@ -53,5 +53,4 @@ watchEffect((onInvalidate) => {
   observer.observe(placeholderEl)
   onInvalidate(() => observer.unobserve(placeholderEl))
 })
-
 </script>
